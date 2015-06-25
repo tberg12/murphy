@@ -37,13 +37,29 @@ public class m {
                    - 0.00000536382 / (x + 5);
         return tmp + Math.log(ser * Math.sqrt(2 * Math.PI));
     }
-    
-    public static float logAdd(float x, float y) {
-        return 0.0f;
+
+    public static float logAdd(float logX, float logY) {
+    	if (logY > logX) {
+    		float tmp = logX;
+    		logX = logY;
+    		logY = tmp;
+    	}
+    	if (logX == Float.NEGATIVE_INFINITY) return logX;
+    	float diff = logX - logY;
+    	if (diff > 10) return logX;
+    	return logX + (float) Math.log(1.0 + Math.exp(-diff));
     }
-    
-    public static double logAdd(double x, double y) {
-    	return 0.0;
-      }
+
+    public static double logAdd(double logX, double logY) {
+    	if (logY > logX) {
+    		double tmp = logX;
+    		logX = logY;
+    		logY = tmp;
+    	}
+    	if (logX == Float.NEGATIVE_INFINITY) return logX;
+    	double diff = logX - logY;
+    	if (diff > 30) return logX;
+    	return logX +  Math.log(1.0 + Math.exp(-diff));
+    }
 
 }
