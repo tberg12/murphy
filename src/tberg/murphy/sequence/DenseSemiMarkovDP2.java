@@ -13,18 +13,18 @@ public class DenseSemiMarkovDP2 {
 		public int length();
 		public int numStates();
 		public int maxAllowedWidth(int s);
-		public double logStartPotential(int w, int s);
-		public double logEndPotential(int s);
-		public double logPotential(int t, int w, int prevS, int s);
+		public float logStartPotential(int w, int s);
+		public float logEndPotential(int s);
+		public float logPotential(int t, int w, int prevS, int s);
 	}
 	
 	public static List<Pair<Integer,Pair<Integer,Integer>>> viterbiDecode(Model model) {
 
 		int[][] prevTimes = new int[model.length()+1][model.numStates()];
 		int[][] prevStates = new int[model.length()+1][model.numStates()];
-		double[][] alphas = new double[model.length()+1][model.numStates()];
+		float[][] alphas = new float[model.length()+1][model.numStates()];
 		for (int t=0; t<model.length()+1; ++t) {
-			Arrays.fill(alphas[t], Double.NEGATIVE_INFINITY);
+			Arrays.fill(alphas[t], Float.NEGATIVE_INFINITY);
 		}
 		
 		for (int t=0; t<model.length(); ++t) {
@@ -34,8 +34,8 @@ public class DenseSemiMarkovDP2 {
 					for (int w=1; w<=maxAllowedWidth; ++w) {
 						int nextT = t+w;
 						if (nextT <= model.length()) {
-							double score = model.logStartPotential(w, s); 
-							double alpha = alphas[nextT][s];
+						  float score = model.logStartPotential(w, s); 
+						  float alpha = alphas[nextT][s];
 							if (score > alpha) {
 								alphas[nextT][s] = score;
 								prevTimes[nextT][s] = 0;
@@ -51,8 +51,8 @@ public class DenseSemiMarkovDP2 {
 					  for (int w=1; w<=maxAllowedWidth; ++w) {
 					    int nextT = t+w;
 					    if (nextT <= model.length()) {
-					      double alpha = alphas[nextT][s];
-					      double score = alphas[t][prevS] + model.logPotential(t, w, prevS, s);
+					      float alpha = alphas[nextT][s];
+					      float score = alphas[t][prevS] + model.logPotential(t, w, prevS, s);
 					      if (score > alpha) {
 					        alphas[nextT][s] = score;
 					        prevTimes[nextT][s] = t;
@@ -68,9 +68,9 @@ public class DenseSemiMarkovDP2 {
 		List<Pair<Integer,Pair<Integer,Integer>>> decode = new ArrayList<Pair<Integer,Pair<Integer,Integer>>>();
 		int currentS = -1;
 		int currentT = model.length();
-		double bestScore = Double.NEGATIVE_INFINITY;
+		float bestScore = Float.NEGATIVE_INFINITY;
 		for (int s=0; s<model.numStates(); ++s) {
-			double score = alphas[model.length()][s] + model.logEndPotential(s);
+		  float score = alphas[model.length()][s] + model.logEndPotential(s);
 			if (score > bestScore) {
 				bestScore = score;
 				currentS = s;
