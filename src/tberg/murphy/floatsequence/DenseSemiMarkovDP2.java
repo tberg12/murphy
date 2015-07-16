@@ -1,4 +1,4 @@
-package tberg.murphy.sequence;
+package tberg.murphy.floatsequence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
