@@ -1,4 +1,4 @@
-package tberg.murphy.structpred;
+package tberg.murphy.faststructpred;
 
 import tberg.murphy.counter.CounterInterface;
 

@@ -18,6 +18,47 @@ public class DenseSemiMarkovDP2 {
 		public float logPotential(int t, int w, int prevS, int s);
 	}
 	
+	public static void alphas(Model model) {
+	  float[][] alphas = new float[model.length()+1][model.numStates()];
+	  for (int t=0; t<model.length()+1; ++t) {
+	    Arrays.fill(alphas[t], Float.NEGATIVE_INFINITY);
+	  }
+	  
+	  for (int t=0; t<model.length(); ++t) {
+	    if (t == 0) {
+	      for (int s=0; s<model.numStates(); ++s) {
+	        int maxAllowedWidth = model.maxAllowedWidth(s);
+	        for (int w=1; w<=maxAllowedWidth; ++w) {
+	          int nextT = t+w;
+	          if (nextT <= model.length()) {
+	            float score = model.logStartPotential(w, s); 
+	            float alpha = alphas[nextT][s];
+	            if (score > alpha) {
+	              alphas[nextT][s] = score;
+	            }
+	          }
+	        }
+	      }
+	    } else {
+	      for (int s=0; s<model.numStates(); ++s) {
+	        int maxAllowedWidth = model.maxAllowedWidth(s);
+	        for (int prevS=0; prevS<model.numStates(); ++prevS) {
+	          for (int w=1; w<=maxAllowedWidth; ++w) {
+	            int nextT = t+w;
+	            if (nextT <= model.length()) {
+	              float alpha = alphas[nextT][s];
+	              float score = alphas[t][prevS] + model.logPotential(t, w, prevS, s);
+	              if (score > alpha) {
+	                alphas[nextT][s] = score;
+	              }
+	            }
+	          }
+	        }
+	      }
+	    }
+	  }
+	}
+	
 	public static List<Pair<Integer,Pair<Integer,Integer>>> viterbiDecode(Model model) {
 
 		int[][] prevTimes = new int[model.length()+1][model.numStates()];
