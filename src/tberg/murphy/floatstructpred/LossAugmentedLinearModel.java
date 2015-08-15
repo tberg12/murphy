@@ -1,4 +1,4 @@
-package tberg.murphy.faststructpred;
+package tberg.murphy.floatstructpred;
 
 import java.util.List;
 

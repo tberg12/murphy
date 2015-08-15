@@ -1,4 +1,4 @@
-package tberg.murphy.fastopt;
+package tberg.murphy.floatopt;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,8 @@ public class AdaGradL2Minimizer implements OnlineMinimizer {
     Random rand = new Random(0);
     float[] guess = a.copy(initial);
     float[] sqrGradSum = new float[guess.length];
-    final float r = (float) (eta * regConstant + delta);
+    a.addi(sqrGradSum, (float) delta);
+    final float r = (float) (eta * regConstant);
     for (int epoch=0; epoch<epochs; ++epoch) {
       float epochValSum = 0.0f;
       for (int funcIndex : a.shuffle(a.enumerate(0, functions.size()), rand)) {
@@ -54,7 +55,7 @@ public class AdaGradL2Minimizer implements OnlineMinimizer {
         }
       }
       if (verbose) System.out.println(String.format("[AdaGradMinimizer.minimize] Epoch %d ended with value %.6f", epoch, epochValSum + regConstant * a.innerProd(guess, guess)));
-      if (iterCallbackFunction != null) iterCallbackFunction.callback(guess, epoch, epochValSum);
+      if (iterCallbackFunction != null) iterCallbackFunction.callback(guess, epoch, epochValSum + regConstant * a.innerProd(guess, guess));
     }
     return guess;
   }

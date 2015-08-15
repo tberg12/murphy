@@ -1,6 +1,8 @@
-package tberg.murphy.fastopt;
+package tberg.murphy.lazyopt;
 
 import java.util.List;
+
+import tberg.murphy.counter.CounterInterface;
 
 public interface OnlineMinimizer {
   public static interface Callback {
@@ -9,5 +11,5 @@ public interface OnlineMinimizer {
       public void callback(float[] guess, int iter, double val) {}
     }
   }
-	public abstract float[] minimize(List<DifferentiableFunction> functions, float[] initial, boolean verbose, Callback iterCallbackFunction);
+	public abstract CounterInterface<Integer> minimize(List<DifferentiableFunction> functions, float[] initial, boolean verbose, Callback iterCallbackFunction);
 }

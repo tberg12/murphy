@@ -26,6 +26,8 @@ public class AdaGradL1Minimizer implements OnlineMinimizer {
 		Random rand = new Random(0);
 		double[] guess = a.copy(initial);
 		double[] sqrGradSum = new double[guess.length];
+		a.addi(sqrGradSum, delta);
+		final double r = eta * regConstant;
 		for (int epoch=0; epoch<epochs; ++epoch) {
 			double epochValSum = 0.0;
 			double[] epochGradSum = new double[guess.length];
@@ -40,9 +42,9 @@ public class AdaGradL1Minimizer implements OnlineMinimizer {
 				a.combi(sqrGradSum, 1.0, sqrGrad, 1.0);
 				
 				for (int i=0; i<guess.length; ++i) {
-					double s = Math.sqrt(sqrGradSum[i]) + delta;
+					double s = Math.sqrt(sqrGradSum[i]);
 					double xHalf = guess[i] - (eta/s)*grad[i];
-					double x = Math.abs(xHalf) - regConstant*(eta/s);
+					double x = Math.abs(xHalf) - (r/s);
 					if (x > 0) {
 						guess[i] = (xHalf > 0 ? 1.0 : -1.0) * x;
 					} else {

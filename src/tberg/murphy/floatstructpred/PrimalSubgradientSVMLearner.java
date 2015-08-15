@@ -1,4 +1,4 @@
-package tberg.murphy.faststructpred;
+package tberg.murphy.floatstructpred;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.Map;
 
 import tberg.murphy.counter.CounterInterface;
 import tberg.murphy.counter.IntCounter;
-import tberg.murphy.fastopt.AdaGradL1Minimizer;
-import tberg.murphy.fastopt.AdaGradL2Minimizer;
-import tberg.murphy.fastopt.DifferentiableFunction;
-import tberg.murphy.fastopt.OnlineMinimizer;
+import tberg.murphy.floatopt.AdaGradL1Minimizer;
+import tberg.murphy.floatopt.AdaGradL2Minimizer;
+import tberg.murphy.floatopt.DifferentiableFunction;
+import tberg.murphy.floatopt.OnlineMinimizer;
 import tberg.murphy.tuple.Pair;
 
 public class PrimalSubgradientSVMLearner<D> implements LossAugmentedLearner<D> {

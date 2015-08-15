@@ -1,4 +1,4 @@
-package tberg.murphy.fastopt;
+package tberg.murphy.floatopt;
 
 import java.util.List;
 import java.util.Map;

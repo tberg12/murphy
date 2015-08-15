@@ -1,4 +1,4 @@
-package tberg.murphy.fastopt;
+package tberg.murphy.floatopt;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +26,7 @@ public class AdaGradL1Minimizer implements OnlineMinimizer {
 	    Random rand = new Random(0);
 	    float[] guess = a.copy(initial);
 	    float[] sqrGradSum = new float[guess.length];
+	    a.addi(sqrGradSum, (float) delta);
 	    final float r = (float) (regConstant * eta);
 	    for (int epoch=0; epoch<epochs; ++epoch) {
 	      float epochValSum = 0.0f;
@@ -44,12 +45,12 @@ public class AdaGradL1Minimizer implements OnlineMinimizer {
 	        for (Map.Entry<Integer,Double> entry : grad.entries()) {
 	          final int key = entry.getKey();
 	          final float val = entry.getValue().floatValue();
-	          float s = (float) Math.sqrt(sqrGradSum[key]) + delta;
+	          float s = (float) Math.sqrt(sqrGradSum[key]);
 	          guess[key] += -(eta/s) * val;
 	        }
 	        
 	        for (int i=0; i<guess.length; ++i) {
-	          final float s = (float) Math.sqrt(sqrGradSum[i]) + delta;
+	          final float s = (float) Math.sqrt(sqrGradSum[i]);
 	          final float xHalf = guess[i];
 	          final float x = (float) Math.abs(xHalf) - (r/s);
 	          if (x > 0) {
@@ -60,7 +61,7 @@ public class AdaGradL1Minimizer implements OnlineMinimizer {
 	        }
 	      }
 	      if (verbose) System.out.println(String.format("[AdaGradMinimizer.minimize] Epoch %d ended with value %.6f", epoch, epochValSum + regConstant * a.sum(a.abs(guess))));
-	      if (iterCallbackFunction != null) iterCallbackFunction.callback(guess, epoch, epochValSum);
+	      if (iterCallbackFunction != null) iterCallbackFunction.callback(guess, epoch, epochValSum + regConstant * a.sum(a.abs(guess)));
 	    }
 	    return guess;
 	  }

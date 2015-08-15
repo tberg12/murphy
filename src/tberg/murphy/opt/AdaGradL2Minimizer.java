@@ -26,6 +26,8 @@ public class AdaGradL2Minimizer implements OnlineMinimizer {
 		Random rand = new Random(0);
 		double[] guess = a.copy(initial);
 		double[] sqrGradSum = new double[guess.length];
+		a.addi(sqrGradSum, delta);
+		final double r = eta * regConstant;
 		for (int epoch=0; epoch<epochs; ++epoch) {
 			double epochValSum = 0.0;
 			double[] epochGradSum = new double[guess.length];
@@ -41,7 +43,7 @@ public class AdaGradL2Minimizer implements OnlineMinimizer {
 				
 				for (int i=0; i<guess.length; ++i) {
 					double s = Math.sqrt(sqrGradSum[i]);
-					guess[i] = (s * guess[i] - eta * grad[i]) / (eta * regConstant + delta + s);
+					guess[i] = (s * guess[i] - eta * grad[i]) / (r + s);
 				}
 			}
 			if (verbose) System.out.println(String.format("[AdaGradMinimizer.minimize] Epoch %d ended with value %.6f", epoch, epochValSum + regConstant * a.innerProd(guess, guess)));
