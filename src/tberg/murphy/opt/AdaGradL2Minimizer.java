@@ -27,7 +27,7 @@ public class AdaGradL2Minimizer implements OnlineMinimizer {
 		double[] guess = a.copy(initial);
 		double[] sqrGradSum = new double[guess.length];
 		a.addi(sqrGradSum, delta);
-		final double r = eta * regConstant;
+		final double r = 2.0 * eta * regConstant;
 		for (int epoch=0; epoch<epochs; ++epoch) {
 			double epochValSum = 0.0;
 			double[] epochGradSum = new double[guess.length];

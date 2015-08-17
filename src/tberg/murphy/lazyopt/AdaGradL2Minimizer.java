@@ -84,7 +84,7 @@ public class AdaGradL2Minimizer implements OnlineMinimizer {
     this.delta = delta;
     this.regConstant = regConstant;
     this.epochs = epochs;
-    this.r = (float) (eta * regConstant);
+    this.r = (float) (2.0 * eta * regConstant);
   }
 
   private static final void flushShrinkageUpdates(final int index, final int[] current, final int[] lastUpdate, final float[] x, final float[] sqrGradSum, final float r) {
