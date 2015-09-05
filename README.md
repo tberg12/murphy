@@ -10,8 +10,8 @@ To use the library, download it one of these ways, and include it in your code a
 
 This library was initially released as supplementary material for the experiments described in:
 
-  [An Empirical Analysis of Optimization for Max-Margin NLP](https://aclweb.org/anthology/D15-1369)
-  Jonathan K. Kummerfeld, Taylor Berg-Kirkpatrick and Dan Klein
+  [An Empirical Analysis of Optimization for Max-Margin NLP](https://aclweb.org/anthology/D15-1369),
+  Jonathan K. Kummerfeld, Taylor Berg-Kirkpatrick and Dan Klein,
   EMNLP 2015
 
 ## Using the library
@@ -24,5 +24,13 @@ You will need to implement the following:
 
 Then include this code on your classpath, compile, and you're ready to go!
 
-TODO:
-When to use floatstructpred v structpred v lazystructpred ?
+## Options
+
+The library comes with three versions of the structured predicition code:
+
+- structpred, the basic implementation
+- floatstructpred, a variant that uses floats instead of doubles to save space and time
+- lazystructpred, a variant that allows for sparse updates
+
+Note that the dual methods (NSlackSVMLearner) are only implemented for the basic version.
+
