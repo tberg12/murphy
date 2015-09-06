@@ -24,6 +24,8 @@ You will need to implement the following:
 
 Then include this code on your classpath, compile, and you're ready to go!
 
+For an exmple, see the files in the example directory. Note, the classification it does is trivial, but it shows how you put the pieces together. You can build and run the example with  `build_and_run_example.sh` (assuming you have javac, java, and standard command line tools - find, echo, mkdir).
+
 ## Options
 
 The library comes with three versions of the structured predicition code:
