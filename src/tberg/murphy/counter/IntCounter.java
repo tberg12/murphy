@@ -20,6 +20,22 @@ import tberg.murphy.util.Iterators;
  */
 public final class IntCounter implements CounterInterface<Integer>, Serializable
 {
+  
+  public static double[] convertToArray(CounterInterface<Integer> counter, int length) {
+    double[] result = new double[length];
+    for (Map.Entry<Integer, Double> entry : counter.entries()) {
+      result[entry.getKey()] = entry.getValue();
+    }
+    return result;
+  }
+  
+  public static float[] convertToFloatArray(CounterInterface<Integer> counter, int length) {
+    float[] result = new float[length];
+    for (Map.Entry<Integer, Double> entry : counter.entries()) {
+      result[entry.getKey()] = entry.getValue().floatValue();
+    }
+    return result;
+  }
 
 	/**
 	 * 
