@@ -38,28 +38,18 @@ public class m {
         return tmp + Math.log(ser * Math.sqrt(2 * Math.PI));
     }
 
-    public static float logAdd(float logX, float logY) {
-    	if (logY > logX) {
-    		float tmp = logX;
-    		logX = logY;
-    		logY = tmp;
-    	}
-    	if (logX == Float.NEGATIVE_INFINITY) return logX;
-    	float diff = logX - logY;
-    	if (diff > 10) return logX;
-    	return logX + (float) Math.log(1.0 + Math.exp(-diff));
+    public static float logAdd(float a, float b) {
+      if (a == Float.NEGATIVE_INFINITY) return b;
+      else if (b == Float.NEGATIVE_INFINITY) return a;
+      else if (a < b) return b + (float) Math.log(1.0 + (float) Math.exp(a - b));
+      else return a + (float) Math.log(1.0 + (float) Math.exp(b - a));
     }
 
-    public static double logAdd(double logX, double logY) {
-    	if (logY > logX) {
-    		double tmp = logX;
-    		logX = logY;
-    		logY = tmp;
-    	}
-    	if (logX == Float.NEGATIVE_INFINITY) return logX;
-    	double diff = logX - logY;
-    	if (diff > 30) return logX;
-    	return logX +  Math.log(1.0 + Math.exp(-diff));
+    public static double logAdd(double a, double b) {
+      if (a == Double.NEGATIVE_INFINITY) return b;
+      else if (b == Double.NEGATIVE_INFINITY) return a;
+      else if (a < b) return b + Math.log(1.0 + Math.exp(a - b));
+      else return a + Math.log(1.0 + Math.exp(b - a));
     }
 
 }
