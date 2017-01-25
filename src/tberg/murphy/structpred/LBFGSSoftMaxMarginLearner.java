@@ -23,7 +23,7 @@ public class LBFGSSoftMaxMarginLearner<D> implements SummingLossAugmentedLearner
     this.tolerance = tolerance;
 	}
 	
-  public CounterInterface<Integer> train(CounterInterface<Integer> initWeights, final SummingLossAugmentedLinearModel<D> model, List<D> data, int iters) {
+  public CounterInterface<Integer> train(CounterInterface<Integer> initWeights, final SummingLossAugmentedLinearModel<D> model, final List<D> data, int iters) {
     DifferentiableFunction obj = new DifferentiableFunction() {
       public Pair<Double, double[]> calculate(double[] x) {
         CounterInterface<Integer> weights = IntCounter.wrapArray(x, numFeatures);
