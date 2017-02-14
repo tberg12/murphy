@@ -284,7 +284,7 @@ public class CublasUtil {
 		}
 		
 		public Matrix diagAddi(Matrix diag) {
-			JCublas2.cublasSaxpy(cublasHandle, diag.cols, Pointer.to(new float[] {1.0f}), diag.data_d, 1, this.data_d, this.rows+1);
+			JCublas2.cublasSaxpy(cublasHandle, diag.rows*diag.cols, Pointer.to(new float[] {1.0f}), diag.data_d, 1, this.data_d, this.rows+1);
 			if (DEBUG_SYNC) JCudaDriver.cuCtxSynchronize();
 			return this;
 		}
