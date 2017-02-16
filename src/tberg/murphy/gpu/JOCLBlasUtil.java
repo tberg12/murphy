@@ -4,23 +4,18 @@ import static org.jocl.CL.*;
 import static org.jocl.blas.CLBLAS.clblasSetup;
 import static org.jocl.blas.CLBLAS.clblasTeardown;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import org.jblas.FloatMatrix;
-import org.jblas.Solve;
 import org.jocl.*;
-import org.jocl.blas.CLBLAS.*;
 import org.jocl.blas.*;
 
 import tberg.murphy.arrays.a;
-import tberg.murphy.gpu.CublasUtil.Matrix;
 
 public class JOCLBlasUtil {
 	
@@ -48,13 +43,12 @@ public class JOCLBlasUtil {
 
 	}
 	
-	public static void startup() {
+	public static void startup(int deviceIndex) {
 		// The platform, device type and device number
 		// that will be used
 
 		final int platformIndex = 0;
 		final long deviceType = CL_DEVICE_TYPE_ALL;
-		final int deviceIndex = 2;
 
 		// Enable exceptions and subsequently omit error checks in this sample
 		CL.setExceptionsEnabled(true);
@@ -149,7 +143,7 @@ public class JOCLBlasUtil {
 	}
 	
 	public static void freeAllBut(Collection<Matrix> keep) {
-		if (DEBUG_SYNC) clFinish(commandQueue);
+		clFinish(commandQueue);
 		LinkedList<Matrix> remainingAllocated = new LinkedList<Matrix>();
 		while (!allocated.isEmpty()) {
 			Matrix mat = allocated.poll();
@@ -1337,7 +1331,7 @@ public class JOCLBlasUtil {
 		
 	}
 	
-	private static final int BLOCK_SIZE = 16;
+	private static final int BLOCK_SIZE = 64;
 	private static final int TR_BLOCK_SIZE = 16;
 	
 	public static final String[] kernelNames =
@@ -1742,7 +1736,7 @@ public class JOCLBlasUtil {
 	
 	public static void main(String[] args) {
 		
-		JOCLBlasUtil.startup();
+		JOCLBlasUtil.startup(1);
 		
 	    Random rand = new Random(1);
 		float[][] Aarray = a.randFloat(2, 3, rand);
