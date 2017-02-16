@@ -43,6 +43,24 @@ public class JOCLBlasUtil {
 
 	}
 	
+	public static void startup() {
+		final int platformIndex = 0;
+		final long deviceType = CL_DEVICE_TYPE_ALL;
+		CL.setExceptionsEnabled(true);
+		int numPlatformsArray[] = new int[1];
+		clGetPlatformIDs(0, null, numPlatformsArray);
+		int numPlatforms = numPlatformsArray[0];
+		cl_platform_id platforms[] = new cl_platform_id[numPlatforms];
+		clGetPlatformIDs(platforms.length, platforms, null);
+		cl_platform_id platform = platforms[platformIndex];
+		cl_context_properties contextProperties = new cl_context_properties();
+		contextProperties.addProperty(CL_CONTEXT_PLATFORM, platform);
+		int numDevicesArray[] = new int[1];
+		clGetDeviceIDs(platform, deviceType, 0, null, numDevicesArray);
+		int numDevices = numDevicesArray[0];
+		startup(numDevices-1);
+	}
+	
 	public static void startup(int deviceIndex) {
 		// The platform, device type and device number
 		// that will be used
